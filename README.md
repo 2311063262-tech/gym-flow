@@ -59,8 +59,8 @@ Hệ thống quản lý phòng gym được xây dựng bằng **Spring Boot** (
 ## 🛠️ Công nghệ
 
 ### Backend
-- **Java 17/21**
-- **Spring Boot 3.2.0**
+- **Java 17-25 (Java 25 LTS)**
+- **Spring Boot 3.5.16**
   - Spring Web
   - Spring Data JPA
   - Spring Boot DevTools
@@ -75,7 +75,7 @@ Hệ thống quản lý phòng gym được xây dựng bằng **Spring Boot** (
 
 ## 💻 Yêu cầu hệ thống
 
-- **JDK 17+** (Java Development Kit)
+- **JDK 25** (Java Development Kit)
 - **Maven 3.6+** hoặc IDE có sẵn Maven (IntelliJ IDEA, Eclipse)
 - **MySQL 8.0+**
 - **Web Browser** (Chrome, Firefox, Edge)

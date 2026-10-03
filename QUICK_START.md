@@ -73,8 +73,8 @@ git push -u origin main
 ## 🛠️ Tech Stack:
 
 **Backend:**
-- Java 17/21
-- Spring Boot 3.2.0
+- Java 17-25 (Java 25 LTS)
+- Spring Boot 3.5.16
 - MySQL 8.0
 - Maven
 
