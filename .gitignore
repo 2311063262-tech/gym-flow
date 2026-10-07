@@ -1,5 +1,8 @@
-auth-service-folder/target/ 
+auth-service-folder/target/
+**/target/
+**/node_modules/
+**/dist/
 .idea/ 
 .vscode/ 
 *.iml 
-.env 
+.env
