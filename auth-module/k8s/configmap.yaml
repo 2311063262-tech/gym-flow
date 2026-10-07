@@ -1,0 +1,43 @@
+---
+# MySQL Initialization Script ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init-script
+  namespace: gym-auth
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS auth_db;
+    USE auth_db;
+
+    CREATE TABLE IF NOT EXISTS users (
+        id BIGINT PRIMARY KEY AUTO_INCREMENT,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        full_name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        phone VARCHAR(20),
+        role ENUM('ADMIN', 'TRAINER', 'MEMBER') NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+
+    -- Insert test accounts (BCrypt hashed password: 123456)
+    INSERT INTO users (username, password, full_name, email, phone, role) VALUES
+    ('admin', '$2a$10$xqN7vLkP9/Ga3BKt3F4VqOXqxZQj5wZQXMFJJF4hGfL3V3YkF4kYy', 'Administrator', 'admin@gym.com', '0123456789', 'ADMIN'),
+    ('trainer1', '$2a$10$xqN7vLkP9/Ga3BKt3F4VqOXqxZQj5wZQXMFJJF4hGfL3V3YkF4kYy', 'Nguyen Van A', 'trainer1@gym.com', '0987654321', 'TRAINER'),
+    ('trainer2', '$2a$10$xqN7vLkP9/Ga3BKt3F4VqOXqxZQj5wZQXMFJJF4hGfL3V3YkF4kYy', 'Tran Thi B', 'trainer2@gym.com', '0912345678', 'TRAINER'),
+    ('member1', '$2a$10$xqN7vLkP9/Ga3BKt3F4VqOXqxZQj5wZQXMFJJF4hGfL3V3YkF4kYy', 'Le Van C', 'member1@gym.com', '0909876543', 'MEMBER'),
+    ('member2', '$2a$10$xqN7vLkP9/Ga3BKt3F4VqOXqxZQj5wZQXMFJJF4hGfL3V3YkF4kYy', 'Pham Thi D', 'member2@gym.com', '0898765432', 'MEMBER');
+
+---
+# Application Configuration ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+  namespace: gym-auth
+data:
+  SPRING_PROFILES_ACTIVE: "prod"
+  CORS_ALLOWED_ORIGINS: "http://localhost:80,https://gym.example.com"
+  MANAGEMENT_ENDPOINTS_ENABLED: "true"

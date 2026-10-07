@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymFlow - Trainer Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 250px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #b8ff3c;
+            border-radius: 10px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 20px 30px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: #b8ff3c;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-main {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-sub {
+            font-size: 9px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-section {
+            padding: 0 20px;
+            margin-bottom: 25px;
+        }
+
+        .menu-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #aaa;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background: rgba(184, 255, 60, 0.1);
+            color: #b8ff3c;
+        }
+
+        .menu-item.active {
+            background: #b8ff3c;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: 16px;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 15px;
+            background: rgba(184, 255, 60, 0.1);
+            border-radius: 10px;
+        }
+
+        .sidebar-footer-text {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 3px;
+        }
+
+        .sidebar-footer-time {
+            font-size: 13px;
+            color: #b8ff3c;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px 30px;
+            min-height: 100vh;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .page-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-top: 5px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 8px 35px 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            width: 200px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: #b8ff3c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #1a1a2e;
+            font-size: 14px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        /* Content Section */
+        .content-header {
+            margin-bottom: 20px;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 5px;
+        }
+
+        .content-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Schedule Card */
+        .schedule-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .schedule-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .schedule-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .schedule-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-dropdown {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .btn-add-class {
+            background: #b8ff3c;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-add-class:hover {
+            background: #a3e635;
+            transform: translateY(-2px);
+        }
+
+        .search-schedule {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .search-schedule input {
+            width: 100%;
+            padding: 8px 35px 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .search-schedule i {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        /* Schedule Table */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedule-table thead {
+            background: #f8f9fa;
+        }
+
+        .schedule-table th {
+            padding: 15px 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .schedule-table td {
+            padding: 18px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+            color: #1a1a2e;
+        }
+
+        .schedule-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .class-name {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .class-level {
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.active {
+            background: rgba(124, 179, 5, 0.15);
+            color: #7cb305;
+        }
+
+        .status-badge.upcoming {
+            background: rgba(0, 123, 255, 0.15);
+            color: #007bff;
+        }
+
+        .status-badge.completed {
+            background: rgba(108, 117, 125, 0.15);
+            color: #6c757d;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .btn-icon:hover {
+            background: #e0e0e0;
+            color: #1a1a2e;
+        }
+
+        .btn-icon.edit:hover {
+            background: rgba(0, 123, 255, 0.15);
+            color: #007bff;
+        }
+
+        .btn-icon.delete:hover {
+            background: rgba(220, 53, 69, 0.15);
+            color: #dc3545;
+        }
+
+        /* Pagination */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .pagination-info {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .pagination-buttons button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination-buttons button:hover {
+            background: #f8f9fa;
+        }
+
+        .pagination-buttons button.active {
+            background: #b8ff3c;
+            border-color: #b8ff3c;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .schedule-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">G</div>
+            <div class="logo-text">
+                <div class="logo-main">GymFlow</div>
+                <div class="logo-sub">FITNESS OPERATIONS</div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-label">Dashboard</div>
+            <a href="#" class="menu-item active">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Lịch của tôi</span>
+            </a>
+        </div>
+
+        <div class="menu-section">
+            <div class="menu-label">Quản lý</div>
+            <a href="#" class="menu-item">
+                <i class="fas fa-users"></i>
+                <span>Hội viên</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-dumbbell"></i>
+                <span>Gói tập</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-clipboard-list"></i>
+                <span>Đăng ký gói</span>
+            </a>
+            <a href="#" class="menu-item">
+                <i class="fas fa-list"></i>
+                <span>Lớp tập</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-footer-text">Chào bạn mới!</div>
+            <div class="sidebar-footer-time">Cùng bắt đầu hôm nay</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div>
+                <div class="breadcrumb">
+                    <span>Trainer</span>
+                    <i class="fas fa-chevron-right" style="font-size: 10px;"></i>
+                    <span style="color: #1a1a2e; font-weight: 600;">Lịch của tôi</span>
+                </div>
+                <div class="page-title">Lịch của tôi</div>
+            </div>
+            <div class="top-bar-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Tìm kiếm...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <i class="fas fa-bell" style="font-size: 18px; color: #999; cursor: pointer;"></i>
+                <div class="user-info" onclick="logout()">
+                    <div class="user-avatar" id="userAvatar">LH</div>
+                    <div class="user-name" id="topBarUserName">Lê Hoàng Nam</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Header -->
+        <div class="content-header">
+            <div class="content-title">Lịch tập</div>
+            <div class="content-subtitle">Sắp xếp lịch và tổ chức các buổi luyện tập hiệu quả cho học viên của bạn.</div>
+        </div>
+
+        <!-- Schedule Card -->
+        <div class="schedule-card">
+            <div class="schedule-header">
+                <div>
+                    <div class="schedule-title">Lịch tập</div>
+                    <div class="schedule-subtitle">Xem và quản lý lịch dạy của bạn</div>
+                </div>
+                <div class="schedule-actions">
+                    <div class="search-schedule">
+                        <input type="text" placeholder="Tìm kiếm lớp...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <select class="filter-dropdown">
+                        <option>Tất cả trạng thái</option>
+                        <option>Đang hoạt động</option>
+                        <option>Sắp diễn ra</option>
+                        <option>Đã hoàn thành</option>
+                    </select>
+                    <button class="btn-add-class">
+                        <i class="fas fa-plus"></i>
+                        Tạo lịch tập
+                    </button>
+                </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <div id="scheduleTableWrapper">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Môn tập</th>
+                            <th>Hôi nhiên</th>
+                            <th>Huấn luyện viên</th>
+                            <th>Thời gian</th>
+                            <th>Trạng thái</th>
+                            <th style="text-align: center;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Sample Data -->
+                        <tr>
+                            <td>
+                                <div class="class-name">Strength Basics</div>
+                                <div class="class-level">PT-03 - Cơ bản về sức mạnh</div>
+                            </td>
+                            <td>Nguyễn Thị Huy</td>
+                            <td>Lê Hoàng Nam</td>
+                            <td>08:30 - 02:00</td>
+                            <td><span class="status-badge active">Hoàn thành</span></td>
+                            <td>
+                                <div class="action-buttons" style="justify-content: center;">
+                                    <button class="btn-icon" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon edit" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="class-name">Power Session</div>
+                                <div class="class-level">TH2 - Ngày thứ Hai</div>
+                            </td>
+                            <td>Trần Quốc Man</td>
+                            <td>Lê Hoàng Nam</td>
+                            <td>10:30 - 12:00</td>
+                            <td><span class="status-badge active">Hoàn thành</span></td>
+                            <td>
+                                <div class="action-buttons" style="justify-content: center;">
+                                    <button class="btn-icon" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon edit" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon delete" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper">
+                    <div class="pagination-info">Trang 1-1 • Tổng số 2 kết quả</div>
+                    <div class="pagination-buttons">
+                        <button class="active">1</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State (hidden by default) -->
+            <div class="empty-state" style="display: none;">
+                <i class="fas fa-calendar-times"></i>
+                <h5>Chưa có lịch tập nào</h5>
+                <p>Bắt đầu bằng cách tạo lịch tập đầu tiên của bạn</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script>
+        // Kiểm tra quyền TRAINER
+        requireRole("TRAINER");
+        
+        // Hiển thị thông tin user
+        const user = getCurrentUser();
+        if (user) {
+            const fullName = user.fullName || user.username;
+            document.getElementById("topBarUserName").textContent = fullName;
+            
+            // Avatar initials
+            const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            document.getElementById("userAvatar").textContent = initials;
+        }
+    </script>
+</body>
+</html>
