@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10130f">
+  <title>GymFlow — Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/admin/admin.css">
+  <script src="/admin/admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <div class="admin-layout">
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <a class="brand admin-brand" href="/admin/dashboard">
+        <span class="brand-mark" aria-hidden="true">✳</span>
+        <span>gym<span class="brand-accent">flow</span></span>
+        <span class="admin-tag">ADMIN</span>
+      </a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="admin-nav" aria-label="Điều hướng quản trị">
+        <a href="/admin/dashboard" data-page="dashboard"><span>◫</span> Tổng quan</a>
+        <a href="/admin/users" data-page="users"><span>♙</span> Tài khoản người dùng</a>
+      </nav>
+      <div class="sidebar-label account-label">TÀI KHOẢN</div>
+      <nav class="admin-nav">
+        <a href="/admin/profile" data-page="profile"><span>◎</span> Hồ sơ cá nhân</a>
+        <button type="button" id="logout-button"><span>↗</span> Đăng xuất</button>
+      </nav>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-user">
+        <div class="user-avatar" id="sidebar-avatar">A</div>
+        <div class="sidebar-user-copy"><strong id="sidebar-name">Admin</strong><span id="sidebar-email"></span></div>
+        <span class="online-dot"></span>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Mở menu">☰</button>
+        <div class="breadcrumb"><span>GymFlow</span><b>/</b><strong id="page-breadcrumb">Tổng quan</strong></div>
+        <div class="topbar-right"><span class="online-dot"></span><span>Hệ thống hoạt động</span></div>
+      </header>
+
+      <main class="admin-content">
+        <section id="dashboard-page" class="admin-page" hidden>
+          <div class="page-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> GYMFLOW MANAGEMENT</div><h1>Tổng <span>quan.</span></h1><p>Tổng hợp tình hình tài khoản trong hệ thống.</p></div>
+            <div class="date-chip" id="today-date"></div>
+          </div>
+          <div class="notice admin-notice" id="dashboard-error" role="alert" hidden></div>
+          <button class="retry-button" id="retry-dashboard" type="button" hidden>Thử tải lại</button>
+          <div class="stats-grid" id="stats-grid" aria-live="polite">
+            <article class="stat-card"><div class="stat-label">TỔNG TÀI KHOẢN <span>♙</span></div><div class="stat-number" data-stat="total">—</div><div class="stat-caption">Đang hoạt động trong hệ thống</div></article>
+            <article class="stat-card"><div class="stat-label">MEMBER <span>◉</span></div><div class="stat-number" data-stat="members">—</div><div class="stat-caption">Tài khoản hội viên</div></article>
+            <article class="stat-card"><div class="stat-label">TRAINER <span>✳</span></div><div class="stat-number" data-stat="trainers">—</div><div class="stat-caption">Huấn luyện viên</div></article>
+            <article class="stat-card"><div class="stat-label">STAFF <span>▤</span></div><div class="stat-number" data-stat="staff">—</div><div class="stat-caption">Nhân sự vận hành</div></article>
+            <article class="stat-card stat-active"><div class="stat-label">ĐANG BẬT <span>●</span></div><div class="stat-number" data-stat="active">—</div><div class="stat-caption">Tài khoản có thể đăng nhập</div></article>
+            <article class="stat-card stat-inactive"><div class="stat-label">VÔ HIỆU HÓA <span>○</span></div><div class="stat-number" data-stat="inactive">—</div><div class="stat-caption">Tài khoản đang tạm khóa</div></article>
+          </div>
+          <section class="panel recent-panel">
+            <div class="panel-heading"><div><h2>Tài khoản mới</h2><p>5 tài khoản được tạo gần đây nhất</p></div><a class="text-link" href="/admin/users">Xem tất cả <span>→</span></a></div>
+            <div class="table-scroll"><table><thead><tr><th>THÀNH VIÊN</th><th>EMAIL</th><th>VAI TRÒ</th><th>TRẠNG THÁI</th><th>NGÀY TẠO</th></tr></thead><tbody id="recent-users"><tr><td colspan="5" class="loading-cell">Đang tải dữ liệu…</td></tr></tbody></table></div>
+          </section>
+        </section>
+
+        <section id="users-page" class="admin-page" hidden>
+          <div class="page-heading users-heading">
+            <div><div class="eyebrow"><span class="eyebrow-line"></span> ACCOUNT DIRECTORY</div><h1>Tài khoản <span>người dùng.</span></h1><p>Tìm kiếm, xem và quản lý tài khoản Trainer/Member.</p></div>
+            <button class="primary-button" id="create-user-button" type="button"><span>＋</span> Tạo tài khoản</button>
+          </div>
+          <div class="notice admin-notice" id="users-error" role="alert" hidden></div>
+          <div class="toolbar panel">
+            <label class="search-box"><span>⌕</span><input type="search" id="search-input" placeholder="Tìm username hoặc email…" autocomplete="off"></label>
+            <select id="role-filter" aria-label="Lọc theo role"><option value="">Tất cả vai trò</option><option>MEMBER</option><option>TRAINER</option><option>STAFF</option><option>ADMIN</option></select>
+            <select id="status-filter" aria-label="Lọc theo trạng thái"><option value="all">Mọi trạng thái</option><option value="active">Đang bật</option><option value="inactive">Vô hiệu hóa</option></select>
+          </div>
+          <section class="panel directory-panel">
+            <div class="panel-heading directory-heading"><div><h2>Danh sách tài khoản</h2><p id="result-count">Đang tải…</p></div><button class="icon-button" id="refresh-users" type="button" aria-label="Tải lại danh sách">↻</button></div>
+            <div class="table-scroll"><table><thead><tr><th>NGƯỜI DÙNG</th><th>EMAIL</th><th>VAI TRÒ</th><th>TRẠNG THÁI</th><th>NGÀY TẠO</th><th>ĐĂNG NHẬP GẦN NHẤT</th><th></th></tr></thead><tbody id="users-table"><tr><td colspan="7" class="loading-cell">Đang tải dữ liệu…</td></tr></tbody></table></div>
+            <div class="pagination"><span id="page-info"></span><div><button class="icon-button" id="prev-page" type="button" aria-label="Trang trước">←</button><button class="icon-button" id="next-page" type="button" aria-label="Trang tiếp">→</button></div></div>
+          </section>
+        </section>
+
+        <section id="profile-page" class="admin-page" hidden>
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR ACCOUNT</div><h1>Hồ sơ <span>cá nhân.</span></h1><p>Thông tin tài khoản quản trị của bạn.</p></div></div>
+          <div class="notice admin-notice" id="profile-error" role="alert" hidden></div>
+          <section class="panel profile-panel">
+            <div class="profile-hero"><div class="profile-avatar-large" id="profile-avatar">A</div><div><span class="role-badge">ADMIN</span><h2 id="profile-name">Admin</h2><p id="profile-email"></p></div></div>
+            <dl class="profile-grid"><div><dt>TÊN NGƯỜI DÙNG</dt><dd id="profile-username"></dd></div><div><dt>MÃ TÀI KHOẢN</dt><dd id="profile-id"></dd></div><div><dt>NGÀY TẠO</dt><dd id="profile-created"></dd></div><div><dt>ĐĂNG NHẬP GẦN NHẤT</dt><dd id="profile-last-login"></dd></div></dl>
+            <form id="profile-form" class="profile-form"><h3>Cập nhật thông tin cơ bản</h3><div class="form-grid"><label>Họ và tên<input name="fullName" maxlength="100"></label><label>Số điện thoại<input name="phone" maxlength="30"></label><label>Tên người dùng<input name="username" minlength="3" maxlength="50" required></label><label>Email<input name="email" type="email" required></label></div><div class="form-actions"><button class="primary-button" type="submit">Lưu thay đổi</button></div></form>
+          </section>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="user-dialog" id="user-dialog">
+    <form id="user-form" method="dialog">
+      <div class="dialog-heading"><div><span class="eyebrow"><span class="eyebrow-line"></span> USER DETAILS</span><h2 id="dialog-title">Tài khoản</h2></div><button class="icon-button" id="close-dialog" type="button" aria-label="Đóng">×</button></div>
+      <div id="dialog-error" class="notice admin-notice" role="alert" hidden></div>
+      <div id="dialog-fields" class="form-grid">
+        <label>Tên người dùng<input name="username" minlength="3" maxlength="50" required></label>
+        <label>Email<input name="email" type="email" required></label>
+        <label>Họ và tên<input name="fullName" maxlength="100"></label>
+        <label>Số điện thoại<input name="phone" maxlength="30"></label>
+        <label id="role-field">Vai trò<select name="role"><option value="MEMBER">MEMBER</option><option value="TRAINER">TRAINER</option></select></label>
+        <label id="password-field">Mật khẩu<input name="password" type="password" minlength="6" autocomplete="new-password"></label>
+      </div>
+      <div class="form-actions" id="dialog-actions"><button class="secondary-button" id="cancel-dialog" type="button">Hủy</button><button class="primary-button" id="save-user" type="submit">Lưu tài khoản</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

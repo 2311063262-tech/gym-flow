@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10130f">
+  <title>GymFlow — Tài khoản của bạn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="GymFlow trang chủ">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none">
+          <path d="M5 12v8M10 8v16M22 8v16M27 12v8M10 16h12" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>gym<span class="brand-accent">flow</span></span>
+    </a>
+    <span class="header-note"><span class="status-dot"></span> Không gian dành cho bạn</span>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro" aria-labelledby="intro-title">
+      <div class="eyebrow"><span class="eyebrow-line"></span> YOUR JOURNEY, YOUR PACE</div>
+      <h1 id="intro-title">Mạnh mẽ hơn<br>mỗi <span class="accent-text">ngày.</span></h1>
+      <p class="intro-copy">Bắt đầu hành trình của bạn cùng GymFlow.<br>Đăng nhập để tiếp tục hoặc tạo tài khoản mới.</p>
+      <div class="intro-decoration" aria-hidden="true">
+        <span class="decoration-ring ring-one"></span>
+        <span class="decoration-ring ring-two"></span>
+        <span class="decoration-spark">✳</span>
+        <span class="decoration-label">MOVE WITH<br>INTENTION</span>
+      </div>
+      <div class="intro-footer">
+        <span class="footer-line"></span>
+        <span>01 <span class="muted">/</span> 04 <span class="footer-label">THE GYMFLOW WAY</span></span>
+      </div>
+    </section>
+
+    <section class="content-panel" aria-label="Khu vực tài khoản">
+      <section class="auth-card" id="auth-view" aria-labelledby="auth-title">
+        <div class="card-kicker"><span class="mini-spark">✳</span> CHÀO MỪNG ĐẾN VỚI GYMFLOW</div>
+        <h2 id="auth-title">Chào mừng<br><span class="heading-light">bạn quay trở lại.</span></h2>
+        <p class="card-description" id="auth-description">Nhập thông tin để tiếp tục hành trình.</p>
+
+        <div class="auth-tabs" role="tablist" aria-label="Chọn hình thức tài khoản">
+          <button class="auth-tab is-active" id="login-tab" type="button" role="tab" aria-selected="true" aria-controls="auth-form" data-mode="login">Đăng nhập</button>
+          <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false" aria-controls="auth-form" data-mode="register">Tạo tài khoản</button>
+        </div>
+
+        <div class="notice" id="auth-notice" role="alert" hidden></div>
+        <form id="auth-form" novalidate>
+          <div class="field" id="username-field" hidden>
+            <label for="username">Tên người dùng</label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 20c.6-3.2 3.1-5 7-5s6.4 1.8 7 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </span>
+              <input id="username" name="username" type="text" autocomplete="username" minlength="3" maxlength="50" placeholder="Tên của bạn">
+            </div>
+            <span class="field-hint">Từ 3 đến 50 ký tự</span>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="5" width="17" height="14" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="m5 7 7 5.5L19 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="ban@email.com">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="password">Mật khẩu</label>
+              <span class="field-hint" id="password-hint" hidden>Tối thiểu 6 ký tự</span>
+            </div>
+            <div class="input-wrap">
+              <span class="input-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><rect x="4.5" y="10" width="15" height="10" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </span>
+              <input id="password" name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="••••••••">
+              <button class="password-toggle" id="password-toggle" type="button" aria-label="Hiện mật khẩu">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button class="submit-button" id="submit-button" type="submit">
+            <span id="submit-label">Đăng nhập</span>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+
+        <div class="card-bottom">
+          <span class="lock-icon" aria-hidden="true">✳</span>
+          Thông tin của bạn được bảo vệ an toàn.
+        </div>
+      </section>
+
+      <section class="account-card" id="account-view" aria-labelledby="account-title" hidden>
+        <div class="account-topline">
+          <span class="card-kicker"><span class="mini-spark">✳</span> TÀI KHOẢN GYMFLOW</span>
+          <button class="signout-button" id="logout-button" type="button">Đăng xuất <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="profile-avatar" id="profile-avatar" aria-hidden="true">G</div>
+        <h2 id="account-title">Xin chào, <span class="heading-light" id="profile-name">bạn</span></h2>
+        <p class="card-description">Tài khoản của bạn đã sẵn sàng. Hãy tiếp tục hành trình hôm nay.</p>
+        <div class="notice" id="account-notice" role="alert" hidden></div>
+        <div class="profile-details">
+          <div class="profile-row">
+            <span class="detail-label">EMAIL</span>
+            <span class="detail-value" id="profile-email"></span>
+          </div>
+          <div class="profile-row">
+            <span class="detail-label">VAI TRÒ</span>
+            <span class="role-badge" id="profile-role"></span>
+          </div>
+          <div class="profile-row">
+            <span class="detail-label">MÃ TÀI KHOẢN</span>
+            <span class="detail-value" id="profile-id"></span>
+          </div>
+          <div class="profile-row">
+            <span class="detail-label">THAM GIA TỪ</span>
+            <span class="detail-value" id="profile-created"></span>
+          </div>
+        </div>
+        <div class="account-footer"><span class="status-dot"></span> Tài khoản đang hoạt động</div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 GYMFLOW</span>
+    <span class="footer-center">FIND YOUR FLOW <span>✳</span></span>
+    <span>MADE FOR MOVEMENT</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10130f">
+  <title>GymFlow — Khu vực tài khoản</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/portal.css">
+  <script src="/portal.js" defer></script>
+</head>
+<body class="portal-body">
+  <header class="site-header portal-header">
+    <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">✳</span><span>gym<span class="brand-accent">flow</span></span></a>
+    <button class="portal-logout" id="logout-button" type="button">Đăng xuất ↗</button>
+  </header>
+  <main class="portal-shell">
+    <div class="eyebrow"><span class="eyebrow-line"></span> YOUR GYMFLOW SPACE</div>
+    <h1 id="portal-title">Chào mừng.</h1>
+    <p class="portal-intro" id="portal-description">Thông tin tài khoản của bạn.</p>
+    <div id="portal-error" class="notice" role="alert" hidden></div>
+    <section class="portal-card">
+      <div class="portal-profile-heading"><div id="portal-avatar" class="portal-avatar">G</div><div><span class="role-badge" id="portal-role"></span><h2 id="portal-name">Đang tải…</h2><p id="portal-email"></p></div></div>
+      <dl class="portal-details"><div><dt>TÊN NGƯỜI DÙNG</dt><dd id="portal-username"></dd></div><div><dt>MÃ TÀI KHOẢN</dt><dd id="portal-id"></dd></div><div><dt>NGÀY TẠO</dt><dd id="portal-created"></dd></div><div><dt>ĐĂNG NHẬP GẦN NHẤT</dt><dd id="portal-last-login"></dd></div></dl>
+      <form id="profile-form" class="portal-form">
+        <h3>Cập nhật hồ sơ</h3>
+        <div class="portal-form-grid"><label>Họ và tên<input name="fullName" maxlength="100"></label><label>Số điện thoại<input name="phone" maxlength="30"></label><label>Tên người dùng<input name="username" minlength="3" maxlength="50" required></label><label>Email<input name="email" type="email" required></label></div>
+        <div class="portal-actions"><button class="submit-button" type="submit">Lưu hồ sơ <span>→</span></button></div>
+      </form>
+    </section>
+    <section id="staff-directory" class="portal-card staff-directory" hidden>
+      <div class="panel-heading"><div><h2>Danh sách tài khoản</h2><p>Quyền STAFF chỉ được xem, không thể chỉnh sửa.</p></div></div>
+      <div class="table-scroll"><table><thead><tr><th>USERNAME</th><th>EMAIL</th><th>VAI TRÒ</th><th>TRẠNG THÁI</th></tr></thead><tbody id="staff-users"><tr><td colspan="4" class="loading-cell">Đang tải danh sách…</td></tr></tbody></table></div>
+    </section>
+  </main>
+  <footer class="site-footer portal-footer"><span>© 2026 GYMFLOW</span><span>FIND YOUR FLOW <span>✳</span></span></footer>
+</body>
+</html>
