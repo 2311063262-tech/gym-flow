@@ -1,0 +1,101 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # Auth Service
+        - id: auth-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/auth/(?<segment>.*), /api/auth/${segment}
+
+        # Membership Service - Plans
+        - id: plans-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/plans/**
+          filters:
+            - RewritePath=/api/plans/(?<segment>.*), /api/plans/${segment}
+
+        # Membership Service - Memberships
+        - id: memberships-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/memberships/**
+          filters:
+            - RewritePath=/api/memberships/(?<segment>.*), /api/memberships/${segment}
+
+        # Membership Service - Payments
+        - id: payments-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/payments/**
+          filters:
+            - RewritePath=/api/payments/(?<segment>.*), /api/payments/${segment}
+
+        # Operations Service - Trainers
+        - id: trainers-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/trainers/**
+          filters:
+            - RewritePath=/api/trainers/(?<segment>.*), /api/trainers/${segment}
+
+        # Operations Service - Schedules
+        - id: schedules-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/schedules/**
+          filters:
+            - RewritePath=/api/schedules/(?<segment>.*), /api/schedules/${segment}
+
+        # Operations Service - Check-ins
+        - id: checkins-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/checkins/**
+          filters:
+            - RewritePath=/api/checkins/(?<segment>.*), /api/checkins/${segment}
+
+        # Report Service
+        - id: reports-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/reports/**
+          filters:
+            - RewritePath=/api/reports/(?<segment>.*), /api/reports/${segment}
+
+        # Block internal routes
+        - id: block-internal
+          uri: no://block
+          predicates:
+            - Path=/internal/**
+          filters:
+            - SetStatus=403
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "http://localhost:3000"
+              - "http://localhost:5173"
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            allowed-headers:
+              - "*"
+            allow-credentials: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
